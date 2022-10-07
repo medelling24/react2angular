@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FunctionComponent, useEffect, useRef, useState, useMemo } from 'react';
+import debounce from 'lodash.debounce';
 
 import {Hero} from "../hero";
 import './hero-search.component.css'
@@ -25,10 +26,20 @@ const HeroSearchReact: FunctionComponent<IHeroSearchProps> = (props: IHeroSearch
     }
   }, [term]);
 
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  });
+
 
   const handleClick = (id: any) => {
     return id;
   }
+
+  const debouncedResults = useMemo(() => {
+    return debounce(handleChange, 300);
+  }, []);
 
   const handleChange = ($event: any) => {
     setTerm($event.target.value);
@@ -49,7 +60,7 @@ const HeroSearchReact: FunctionComponent<IHeroSearchProps> = (props: IHeroSearch
   return (
     <div id="search-component">
       <label>Hero Search</label>
-      <input id="search-box" onChange={handleChange} value={term || ''} />
+      <input id="search-box" onChange={debouncedResults} value={term || ''} />
       <ul className="search-result">
         {renderHeroes}
       </ul>
