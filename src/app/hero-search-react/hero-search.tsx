@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FunctionComponent, useEffect, useRef, useState, useMemo } from 'react';
-import debounce from 'lodash.debounce';
+import { debounce } from 'lodash';
 
 import {Hero} from "../hero";
 import './hero-search.component.css'
