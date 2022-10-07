@@ -15,31 +15,24 @@ const HeroSearchReact: FunctionComponent<IHeroSearchProps> = (props: IHeroSearch
   const [heroes, setHeroes] = useState([])
   const [term, setTerm] = useState(null)
 
+  const debouncedData = debounce((term) => {
+    props.heroService.searchHeroes(term).subscribe((heroes: Hero[]) => {
+      // @ts-ignore
+      setHeroes(heroes)
+    });
+  }, 300)
+
   useEffect(() => {
     if (term) {
-      props.heroService.searchHeroes(term).subscribe((heroes: Hero[]) => {
-        // @ts-ignore
-        setHeroes(heroes)
-      });
+      debouncedData(term);
     } else {
       setHeroes([])
     }
   }, [term]);
 
-  useEffect(() => {
-    return () => {
-      debouncedResults.cancel();
-    };
-  });
-
-
   const handleClick = (id: any) => {
     return id;
   }
-
-  const debouncedResults = useMemo(() => {
-    return debounce(handleChange, 300);
-  }, []);
 
   const handleChange = ($event: any) => {
     setTerm($event.target.value);
@@ -60,7 +53,7 @@ const HeroSearchReact: FunctionComponent<IHeroSearchProps> = (props: IHeroSearch
   return (
     <div id="search-component">
       <label>Hero Search</label>
-      <input id="search-box" onChange={debouncedResults} value={term || ''} />
+      <input id="search-box" onChange={handleChange} value={term || ''} />
       <ul className="search-result">
         {renderHeroes}
       </ul>
