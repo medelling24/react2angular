@@ -52,7 +52,7 @@ const HeroSearchReact: FunctionComponent<IHeroSearchProps> = (props: IHeroSearch
 
   return (
     <div id="search-component">
-      <label>Hero Search</label>
+      <label>Hero Search React</label>
       <input id="search-box" onChange={handleChange} value={term || ''} />
       <ul className="search-result">
         {renderHeroes}

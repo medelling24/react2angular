@@ -22,7 +22,7 @@ const containerElementName = 'heroSearchReact';
 
 @Component({
   selector: 'hero-search-react',
-  template: `<span #${containerElementName}></span>`,
+  template: `<div #${containerElementName}></div>`,
   encapsulation: ViewEncapsulation.None,
 })
 
@@ -50,9 +50,7 @@ export class HeroSearchReactWrapper implements OnChanges, OnDestroy, AfterViewIn
   private render() {
     this.root.render(
       <React.StrictMode>
-        <div>
           <HeroSearchReact heroService={this.heroService} />
-        </div>
       </React.StrictMode>
       );
   }

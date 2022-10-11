@@ -18,7 +18,7 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 19, name: 'Magma' },
       { id: 20, name: 'Tornado' }
     ];
-    for (let i = 100; i < 10000; i++) {
+    for (let i = 100; i < 80000; i++) {
       heroes.push({id: i, name: 'Hero ' + i.toString()})
     }
     return {heroes};
